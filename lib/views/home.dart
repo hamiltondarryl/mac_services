@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mac_services/views/pageViews/cart.dart';
 import 'package:mac_services/views/pageViews/homepage.dart';
 import 'package:mac_services/views/pageViews/profil.dart';
+import 'package:mac_services/views/pageViews/search.dart';
+import 'package:mac_services/widgets/bottombavigationbarItem.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _HomeState extends State<Home> {
         controller: _pageController,
         children: <Widget>[
           HomePage(),
+          Search(),
           Cart(),
           Profile(),
         ],
@@ -37,18 +40,10 @@ class _HomeState extends State<Home> {
         currentIndex: _selectedIndex,
         elevation: 50.0,
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home,size: _selectedIndex == 0 ? 40 :25.0,),
-            title: Text('Accueil')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart, size: _selectedIndex == 1 ? 40 :25.0,),
-            title: Text('Panier')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline, size: _selectedIndex == 2 ? 40 :25.0),
-            title: Text('Profil')
-          )
+           customBottomNavigationBarItem(title: "Accueil", icon: Icons.home, curentIndex: _selectedIndex, index: 0 ),
+           customBottomNavigationBarItem(title: "Recherche", icon: Icons.search, curentIndex: _selectedIndex, index: 1 ),
+           customBottomNavigationBarItem(title: "Panier", icon: Icons.shopping_cart_outlined, curentIndex: _selectedIndex, index: 2 ),
+           customBottomNavigationBarItem(title: "Profil", icon: Icons.person_outline, curentIndex: _selectedIndex, index: 3 ),
         ]
       ),
     );
