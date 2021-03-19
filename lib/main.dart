@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mac_services/views/home.dart';
-
 void main() {
   runApp(MyApp());
 }

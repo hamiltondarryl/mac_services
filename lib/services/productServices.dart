@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:mac_services/models/categories.dart';
+import 'package:mac_services/models/produit.dart';
 import 'package:mac_services/services/basics.dart';
 
-class CategoriesServices {
-  static Future<List<CategorieModel>> getAllCategories() async {
-    List<CategorieModel> liste;
+class ProduitServices {
+  static Future<List<ProduitModel>> getProduits(String id) async {
+    List<ProduitModel> liste;
 
-    var request = await http.get(BasicInfo.BASIC_CATEGORIES);
+    var request = await http.get(BasicInfo.BASIC_PRODUCT + id);
     if (request.statusCode == 200) {
       var response = jsonDecode(request.body);
       var datas = response["datas"];
       liste = datas
-          .map<CategorieModel>((json) => CategorieModel.fromJson(json))
+          .map<ProduitModel>((json) => ProduitModel.fromJson(json))
           .toList();
       return liste;
     } else {
