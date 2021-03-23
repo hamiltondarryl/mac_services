@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mac_services/config/colors.dart';
 import 'package:mac_services/models/produit.dart';
+import 'package:mac_services/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:toast/toast.dart';
 
 class DetailProduit extends StatefulWidget {
@@ -13,37 +15,35 @@ class DetailProduit extends StatefulWidget {
 }
 
 class _DetailProduitState extends State<DetailProduit> {
-
   int countAdd = 0;
   int prix = 0;
+  CartProvider _cartProvider;
 
-
-  void addInCart(){
-
+  void addInCart() {
     setState(() {
-      countAdd ++ ;
-      prix = int.parse(widget.produitModel.prixUn) * countAdd  ;
+      countAdd++;
+      prix = int.parse(widget.produitModel.prixUn) * countAdd;
     });
-
   }
 
-  void removeIn(){
-      if (countAdd >= 1) {
-        setState(() {
-          countAdd-- ;
-          prix = int.parse(widget.produitModel.prixUn) * countAdd  ;
-        });
-
-      } else {
-        Toast.show("Vous ne pouvez réduire la quantité  !!!", context, duration: Toast.LENGTH_SHORT, gravity:  Toast.BOTTOM);
+  void removeIn() {
+    if (countAdd >= 1) {
+      setState(() {
+        countAdd--;
+        prix = int.parse(widget.produitModel.prixUn) * countAdd;
+      });
+    } else {
+      Toast.show("Vous ne pouvez réduire la quantité  !!!", context,
+          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     }
-
   }
-
 
   @override
   Widget build(BuildContext context) {
+    _cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(
@@ -102,9 +102,22 @@ class _DetailProduitState extends State<DetailProduit> {
                           ),
                           Row(
                             children: [
-                              Flexible(child: Text("Prix unitaire : ", style: TextStyle(color: Colors.black54, fontSize: 20.0, fontWeight: FontWeight.bold),)),
-                              Flexible(child: Text(
-                                "${widget.produitModel.prixUn} FCFA", style: TextStyle(color: ColorsSys.red, fontSize: 20.0, fontWeight: FontWeight.bold),)),
+                              Flexible(
+                                  child: Text(
+                                "Prix unitaire : ",
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
+                              Flexible(
+                                  child: Text(
+                                "${widget.produitModel.prixUn} FCFA",
+                                style: TextStyle(
+                                    color: ColorsSys.red,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              )),
                             ],
                           ),
                           Flexible(
@@ -112,78 +125,114 @@ class _DetailProduitState extends State<DetailProduit> {
                             widget.produitModel.description,
                             textAlign: TextAlign.justify,
                             style: TextStyle(color: Colors.black54),
-                            )
-                          ),
-
+                          )),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Row(
                                 children: [
                                   Container(
-                                    width : 40,
+                                    width: 40,
                                     height: 40,
-                                    decoration : BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.2),
-                                          blurRadius: 40.0,
-                                          offset: Offset.zero
-                                        )
-                                      ],
-                                      shape: BoxShape.circle
-                                    ),
-                                    child: Center(
-                                      child: IconButton(
-                                        iconSize: 25.0,
-                                        color: ColorsSys.red,
-                                        icon: Icon(Icons.remove),
-                                         onPressed: (){
-                                           removeIn();
-                                         }),
-                                    ),
-                                  ),
-                                  SizedBox(width: 20.0),
-                                  Text(countAdd.toString(), style: TextStyle(color: Colors.black87, fontSize: 20, fontWeight: FontWeight.bold)),
-                                  SizedBox(width: 20.0),
-                                  Container(
-                                    width : 40,
-                                    height: 40,
-                                    decoration : BoxDecoration(
+                                    decoration: BoxDecoration(
                                         color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
-                                              color: Colors.black.withOpacity(0.2),
-                                              blurRadius: 50.0,
-                                              offset: Offset.zero
-                                          )
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              blurRadius: 40.0,
+                                              offset: Offset.zero)
                                         ],
-                                        shape: BoxShape.circle
+                                        shape: BoxShape.circle),
+                                    child: Center(
+                                      child: IconButton(
+                                          iconSize: 25.0,
+                                          color: ColorsSys.red,
+                                          icon: Icon(Icons.remove),
+                                          onPressed: () {
+                                            removeIn();
+                                          }),
                                     ),
+                                  ),
+                                  SizedBox(width: 20.0),
+                                  Text(countAdd.toString(),
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold)),
+                                  SizedBox(width: 20.0),
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              color:
+                                                  Colors.black.withOpacity(0.2),
+                                              blurRadius: 50.0,
+                                              offset: Offset.zero)
+                                        ],
+                                        shape: BoxShape.circle),
                                     child: Center(
                                       child: IconButton(
                                           iconSize: 25.0,
                                           color: ColorsSys.red,
                                           icon: Icon(Icons.add),
-                                          onPressed: (){
+                                          onPressed: () {
                                             addInCart();
                                           }),
                                     ),
                                   ),
                                 ],
                               ),
-                              Flexible(child: Text(" $prix FCFA", style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 20.0 ),)),
+                              Flexible(
+                                  child: Text(
+                                " $prix FCFA",
+                                style: TextStyle(
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
+                              )),
                             ],
                           ),
                           Center(
                             child: OutlinedButton.icon(
-                              icon: Icon(Icons.shopping_cart_outlined, color: ColorsSys.red),
-                              label: Text("Ajouter au panier", style: TextStyle(color: ColorsSys.red, fontSize: 20, fontWeight: FontWeight.bold),),
-                              onPressed: () => print("it's pressed"),
+                              icon: Icon(Icons.shopping_cart_outlined,
+                                  color: ColorsSys.red),
+                              label: Text(
+                                "Ajouter au panier",
+                                style: TextStyle(
+                                    color: ColorsSys.red,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                print("it's pressed");
+
+                                if (prix <= 0) {
+                                  Toast.show(
+                                      "Votre panier ne contient pas ce produit !!!",
+                                      context,
+                                      duration: Toast.LENGTH_SHORT,
+                                      gravity: Toast.BOTTOM);
+                                } else {
+                                  widget.produitModel.pvente = prix.toString();
+                                  widget.produitModel.quantite =
+                                      countAdd.toString();
+                                  _cartProvider.addProduit(widget.produitModel);
+                                  Toast.show(
+                                      "Le produit a été ajouté avec succès",
+                                      context,
+                                      duration: Toast.LENGTH_SHORT,
+                                      gravity: Toast.CENTER,
+                                      backgroundColor: Colors.green);
+                                }
+                              },
                               style: ElevatedButton.styleFrom(
                                 shadowColor: ColorsSys.red,
-                                side: BorderSide(width: 2.0, color: ColorsSys.red),
+                                side: BorderSide(
+                                    width: 2.0, color: ColorsSys.red),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(32.0),
                                 ),

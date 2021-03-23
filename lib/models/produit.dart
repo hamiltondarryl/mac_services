@@ -4,6 +4,7 @@ class ProduitModel {
     this.libelle,
     this.description,
     this.prixUn,
+    this.pvente,
     this.quantite,
     this.categorie,
     this.image,
@@ -13,6 +14,7 @@ class ProduitModel {
   String libelle;
   String description;
   String prixUn;
+  String pvente;
   String quantite;
   String categorie;
   String image;
@@ -22,6 +24,7 @@ class ProduitModel {
         libelle: json["libelle"],
         description: json["description"],
         prixUn: json["prix_un"],
+        pvente: json["pvente"],
         quantite: json["quantite"],
         categorie: json["categorie"],
         image: json["image"],
@@ -32,6 +35,7 @@ class ProduitModel {
         "libelle": libelle,
         "description": description,
         "prix_un": prixUn,
+        "pvente": pvente,
         "quantite": quantite,
         "categorie": categorie,
         "image": image,

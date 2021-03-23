@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mac_services/config/colors.dart';
+import 'package:mac_services/providers/cart_provider.dart';
 import 'package:mac_services/services/categoriesServices.dart';
 import 'package:mac_services/services/productServices.dart';
 import 'package:mac_services/views/pageViews/search.dart';
 import 'package:mac_services/widgets/card.dart';
 import 'package:mac_services/widgets/icon_cart.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int curentIndex = 0;
   String curentCat = "";
+  CartProvider _cartProvider;
 
   @override
   void initState() {
@@ -28,6 +31,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -59,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       )
                     ],
                   ),
-                  myAppBarIcon(data: 10),
+                  myAppBarIcon(data: _cartProvider.produits.length),
                 ],
               ),
               SizedBox(height: 30.0),
@@ -187,6 +192,7 @@ class _HomePageState extends State<HomePage> {
                                 libelle: data[index].libelle,
                                 description: data[index].description,
                                 prix: data[index].prixUn,
+                                pvente: data[index].pvente,
                                 categorie: data[index].categorie,
                                 image: data[index].image);
                           });

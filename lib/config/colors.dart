@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorsSys {
-
   static Color red = Color(0xFFee5253);
   static Color grey = Color(0xFFF1F1F1);
   static Color black = Color(0xFF222f3e);
@@ -9,10 +8,10 @@ class ColorsSys {
   static Color blue = Color(0xFF2e86de);
   static Color green = Color(0xFF10ac84);
 
-   static const MaterialColor greenSy = MaterialColor(
+  static const MaterialColor redSy = MaterialColor(
     _bluePrimaryValue,
     <int, Color>{
-       50: Color(0xFFee5253),
+      50: Color(0xFFee5253),
       100: Color(0xFFee5253),
       200: Color(0xFFee5253),
       300: Color(0xFFee5253),
@@ -25,5 +24,4 @@ class ColorsSys {
     },
   );
   static const int _bluePrimaryValue = 0xFFee5253;
-
 }

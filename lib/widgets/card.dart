@@ -5,12 +5,10 @@ import 'package:mac_services/helpers/functions.dart';
 import 'package:mac_services/models/produit.dart';
 import 'package:mac_services/views/pageViews/details_produit.dart';
 
-Widget customCard({context, id, libelle, description, prix, categorie, image}) {
-  print(image);
+Widget customCard(
+    {context, id, libelle, description, prix, pvente, categorie, image}) {
   return GestureDetector(
     onTap: () {
-      print(libelle);
-
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -20,6 +18,7 @@ Widget customCard({context, id, libelle, description, prix, categorie, image}) {
                         libelle: libelle,
                         description: description,
                         prixUn: prix,
+                        pvente: pvente,
                         categorie: categorie,
                         image: image),
                   )));
